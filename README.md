@@ -17,11 +17,15 @@ $ yarn add calculation-precision
 ### use 使用
 #### es5
 ```
+//全部引用
 const CalculationPrecision = require('calculation-precision')
 ```
 #### es6
 ```
+//全部引用
 import calculationPrecision from 'calculation-precision'
+//按需引用
+import {accDiv, accMul, accAdd, subtr, BigNumber as bigNumber} from 'calculation-precision'
 ```
 
 ### 介绍
