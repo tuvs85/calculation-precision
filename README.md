@@ -1,3 +1,4 @@
+[calculation-precision gitHub链接](https://github.com/tuvs85/calculation-precision)
 ### BigNumber 默认配置 
 ```
 BigNumber.config({ ROUNDING_MODE: 1})
@@ -70,6 +71,12 @@ function subtr(arg1,arg2){
   return BigNumber(((arg1*m-arg2*m)/m).toFixed(n)).toFixed();
 }
 
+//科学计算方式显示处理
+//bigNumber显示精度处理
+function bigNumberToFixed(num, dec){
+  return BigNumber(num).toFixed(dec)
+}
+
 ```
 
 #### use
@@ -100,4 +107,15 @@ function subtr(arg1,arg2){
   0.0004 - 0.0001 // 0.00030000000000000003
   //使用方法计算
   subtr(0.0004, 0.0001) // 0.0003
+```
+```
+//bigNumber显示精度处理
+//后台数据库给过来的数据
+  {
+    ...,
+    price: 1e-10,
+    ....
+  }
+  //这时候拿到的数据正常情况下（不排除有给高校或者某些研究机构做的需求就不需要处理）是不能直接现实在前台页面，需要处理一下，这里我用了bigNumber.js直接转换显示
+  bigNumberToFixed(*.price) // "0.0000000001"
 ```

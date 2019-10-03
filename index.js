@@ -33,10 +33,16 @@ export function subtr(arg1,arg2){
   n=(r1>=r2)?r1:r2;
   return BigNumber(((arg1*m-arg2*m)/m).toFixed(n)).toFixed();
 }
+//bigNumber显示精度处理
+export function bigNumberToFixed(num, dec){
+  return BigNumber(num).toFixed(dec)
+}
+
 export default {
   BigNumber,
   accDiv,
   accMul,
   accAdd,
-  subtr
+  subtr,
+  bigNumberToFixed
 }
