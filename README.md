@@ -77,6 +77,31 @@ function bigNumberToFixed(num, dec){
   return BigNumber(num).toFixed(dec)
 }
 
+//数值格式化， 千、百、万。。/ k、m、g、t....
+//默认使用    ["", "K", "M", "G", "T", "P", "E"]
+export const nFormatter = {
+  config: ["", "K", "M", "G", "T", "P", "E"],
+  nFormatterFun: function(num, digits) {
+    const si = [
+      { value: 1, symbol: this.config[0] },
+      { value: 1e3, symbol: this.config[1] },
+      { value: 1e6, symbol: this.config[2] },
+      { value: 1e9, symbol: this.config[3] },
+      { value: 1e12, symbol: this.config[4] },
+      { value: 1e15, symbol: this.config[5] },
+      { value: 1e18, symbol: this.config[6] }
+    ];
+    const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+    let i;
+    for (i = si.length - 1; i > 0; i--) {
+      if (num >= si[i].value) {
+        break;
+      }
+    }
+    return BigNumber((num / si[i].value)).toFixed(digits).replace(rx, "$1") + si[i].symbol;
+    // return (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol;
+  }
+};
 ```
 
 #### use
@@ -118,4 +143,14 @@ function bigNumberToFixed(num, dec){
   }
   //这时候拿到的数据正常情况下（不排除有给高校或者某些研究机构做的需求就不需要处理）是不能直接现实在前台页面，需要处理一下，这里我用了bigNumber.js直接转换显示
   bigNumberToFixed(*.price) // "0.0000000001"
+
+//数值格式化显示：
+//修改默认格式化列表，
+nFormatter.config = ['', '千','十万','千万','亿','百亿','万亿']
+/
+nFormatter.config = ["", "K", "M", "G", "T", "P", "E"] //default
+//演示使用k m g t p e
+  nFormatter.nFormatterFun(111.1111111111,2)//111.11
+  nFormatter.nFormatterFun(1111111111.111,2)//11.11G
+  nFormatter.nFormatterFun(111111111111111.111111,2)//111.11T
 ```
